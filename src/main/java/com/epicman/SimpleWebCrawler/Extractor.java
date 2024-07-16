@@ -2,8 +2,8 @@ package com.epicman.SimpleWebCrawler;
 
 import java.util.regex.Pattern;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
+import java.util.ArrayList;
 
 public class Extractor {
   private String htmlContent;
@@ -16,19 +16,21 @@ public class Extractor {
     rules.put("anchor_rule", "<a[\\s]+[^>]+>(|((?:.(?!\\<\\/a\\>))*.))<\\/a>");
   }
 
-  public String getAnchorTags() {
+  public ArrayList<String> getAnchorTags() {
     if (htmlContent.isEmpty()) {
       throw new RuntimeException("HTML Content is empty!");
     }
     String anchorRule = rules.get("anchor_rule"); 
     Pattern anchorPattern = Pattern.compile(anchorRule, Pattern.MULTILINE);
     Matcher anchorMatcher = anchorPattern.matcher(htmlContent);
+    ArrayList<String> result = new ArrayList<>();
 
-    if (anchorMatcher.find()) {
-      return anchorMatcher.group(0);
+    while (anchorMatcher.find()) {
+      for (int i=0; i<anchorMatcher.groupCount(); i++) {
+        result.add(anchorMatcher.group(i));
+      }
     }
-    else {
-      return "MATCH_NOT_FOUND";
-    }
+
+    return result;
   }
 }

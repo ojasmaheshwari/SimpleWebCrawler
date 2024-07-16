@@ -2,10 +2,11 @@ package com.epicman.SimpleWebCrawler;
 
 import java.io.FileWriter;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class App {
   public static void main(String[] args) {
-    Request req = new Request("https://ojasmaheshwari.netlify.app");
+    Request req = new Request("https://ojasmaheshwari.github.io");
     URL url = req.getUrl();
     System.out.println("Getting " + url.toString());
     String response = req.get();
@@ -16,11 +17,15 @@ public class App {
       fileWriter.write(response);
       fileWriter.close();
 
-      System.out.println("TEST");
-
       // Search for anchor tags
       Extractor extractor = new Extractor(response);
-      System.out.println(extractor.getAnchorTags());
+      ArrayList<String> anchorTags = extractor.getAnchorTags();
+      System.out.println("From App.java");
+      FileWriter anchorFileWriter = new FileWriter("./anchor_query.html");
+      for (int i=0; i<anchorTags.size(); i++) {
+      anchorFileWriter.write(anchorTags.get(i));
+      }
+      anchorFileWriter.close();
     }
     catch (Exception e) {
       e.printStackTrace();
