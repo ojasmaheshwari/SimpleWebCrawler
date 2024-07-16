@@ -7,11 +7,11 @@ import java.net.URL;
 import java.net.URI;
 
 class Request {
-  URL url;
-  URI uri;
-  HttpURLConnection conn;
-  BufferedReader reader;
-  StringBuffer response = new StringBuffer();
+  private URL url;
+  private URI uri;
+  private HttpURLConnection conn;
+  private BufferedReader reader;
+  private StringBuffer response = new StringBuffer();
 
   public Request(String url) {
     this.setUrl(url);
