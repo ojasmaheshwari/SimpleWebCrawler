@@ -2,7 +2,10 @@ package com.epicman.SimpleWebCrawler;
 
 import java.io.FileWriter;
 import java.net.URL;
-import java.util.ArrayList;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+import org.jsoup.nodes.Element;
 
 public class App {
   public static void main(String[] args) {
@@ -17,15 +20,8 @@ public class App {
       fileWriter.write(response);
       fileWriter.close();
 
-      // Search for anchor tags
-      Extractor extractor = new Extractor(response);
-      ArrayList<String> anchorTags = extractor.getAnchorTags();
-      System.out.println("From App.java");
-      FileWriter anchorFileWriter = new FileWriter("./anchor_query.html");
-      for (int i=0; i<anchorTags.size(); i++) {
-      anchorFileWriter.write(anchorTags.get(i));
-      }
-      anchorFileWriter.close();
+      Document doc = Extractor.create(response);
+
     }
     catch (Exception e) {
       e.printStackTrace();
